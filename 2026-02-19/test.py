@@ -150,7 +150,7 @@ print("{0:>20}".format('script'))
 # 서식문자, format
 print("%-10s" %('script'))
 print("{0:<10}" .format("script"))
-#10자리 python 왼쪽정렬(자리남으면 _로 채워라)
+#10자리 python 왼쪽정렬(자리남으면 _로 채워라)-공백 채우기
 #python 문자 10자리 중앙
 print("{0:_<10}" .format("python"))
 print("{0:^10}" .format('python'))
