@@ -202,8 +202,8 @@ profile={
 }
 
 for i in profile:
-    print(i) #키값 
-    print(profile[i]) 
+    print(i) #키값 반환
+    print(profile[i])  #Value 값 반환
 
 print("=========================")
 for i in profile.values():

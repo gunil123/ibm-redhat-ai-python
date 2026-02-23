@@ -3,18 +3,228 @@
 
 ## 02-23 수업내용
 
-## 집합 자료형
-- 집합에 관련된 것을 쉽게 처리하기 위해 만든 자로형
+## 집합 자료형 - set
+- 집합에 관련된 것을 쉽게 처리하기 위해 만든 자료형
+```python
+# 순서(x), 중복(x)
+s1 = set()
+s2 = set([1,2,3,4]) #리스트 자료형을 집합 자료형으로 변환
 
+s3 = set([1,4,6,7])
+s4 = set([1,2,'apple','mango','python'])
+s5 = {'phone', 'computer','notebook', 'water','phone'}
+s6 = {12, 'mouse', (1,2,3),3.14}
 
+print(type(s1),type(s2),type(s3),type(s4))
+#s2를 튜플로 변환
+t = tuple(s2)
+print(t, type(t))
+# 튜플로 변경했기 때문에 인덱스 사용가능
+print(t[0], t[1:3])
 
+# s3,s4 list 변경
+# 리스트로변경했기 때문에 인덱스 사용가능
+li = list(s3)
+li2 = list(s4)
+print(li[0], li2[1:3])
+```
+### 교집합, 합집합, 차집합 구하기
+```python
+et1 = set([1,2,3,4,5,6])
+set2 = set([4,5,6,7,8,9])
 
+print(set1&set2)   #교집합 456
+print(set1.intersection(set2))  #교집합
 
+print(set1|set2) #요소 중복 제거되면서 합쳐짐
+print(set1.union(set2))  #합집합
 
+print(set1-set2) #{} set1에는 있지만 set2에 없는 요소들
+print(set1.difference(set2)) #차집합
+```
 
+### 집합 자료형 관련 함수
+- 값 1개 추가하기 - **add**
+- 값 여러 개 추가하기 - **update**
+- 특정 값 제거하기 - **remove**
+- 다 제거 -**clear**(요소만 사라짐, 구조 남아있음)
+---
+## 불 자료형
+- 참과 거짓을 나타내는 자료형이다. True, False 값을 가진다.
+```python
+a = True
+b = False
+print(type(a)) #<class 'bool'>
+print(type(b)) #<class 'bool'>
+```
+- 0: 거짓, None : 거짓
 
+### copy 모듈 이용하기 p.114
+```python
+#from 모둘명 import 함수
+from copy import copy
+a2=[1,2,3] #복사를 했지만 요소만 복사/ 주소값은 복사하지않음
+b2 = copy((a2))
+```
+---
+## if문
+- if문에 속하는 모든 문장 들여쓰기 한다.
+```python
+if True:
+    print('참')
+else:
+    print('거짓')
+x = 20
+y = 10
+print(x==y)
+print(x!=y)
+print(x>y)
+print(x>=y)
+print(x<y)
+print(x<=y)
+```
+--- 
+## and, or, not
+- 조건을 판단하기 위해 사용하는 연산자로 and, or, not 이 있다.
+```python
+print(a>b and b>c)
+print(a>b or b>c)
+print(not a>b)
+print(not b>c)
+print(not True)
+print(not False)
+```
 
+## in, not in
+- x in 리스트, x not in 리스트
+- x in 튜플, x not in  튜플
+- x in 문자열, x not in 문자열
 
+```python
+x = [10,20,30] #list
+y = {70, 80, 90, 100} #set
+z={"name":"kim", "city":"seoul", "id":"gildong"} #dict
+m=(10, 20, 24) #tuple
+
+print(25 in x)
+print(90 in y)
+print(20 not in m)
+
+print("city" in z)
+print("gildong" in z.values()) #값들에 gildong값이 있는지 확인
+```
+---
+## 다양한 조건을 판단하는 elif
+```python
+score = 90
+if score>=90:
+    print("A")
+elif score >= 80:
+    print("B")
+elif score >= 70:
+    print("C")
+else:
+    print("F")
+```
+---
+## 조건부 표현식
+- 파이썬의 조건부 표현식을 사용하면 코드를 간단히  표현할 수 있다.
+```python
+message = "succes" if score>=60 else "failuer"
+```
+
+---
+## while문 만들기
+```python
+#초기 조건 증감
+#while 조건:
+# 반복할 실행코드
+
+num =5 
+while num>0:
+    print(num)
+    num=num-1
+
+a = ['a', 'b', 'c']
+
+while a: #리스트에 값이 있으므로 True로 인식
+    print(a.pop())  #마지막 값 반환
+```
+- break는 반복문을 탈출하고, continue는 처음으로 돌아가서 반복문 다시 실행한다.
+- While True: 를 사용하면 무한 루프를 사용할 수 있다.
+---
+
+## for 문
+```python
+test_list=['one','two','three']
+for i in test_list:
+    print(i)
+# for i in collecton:
+# 반복할 실행코드
+
+names=['kim','lee','park','choi']
+for i in names:
+    print(i)
+
+profile={
+"name":"hong",
+"age" : 33
+}
+
+for i in profile:
+    print(i) #키값을 반환한다.
+    print(profile[i]) #Value 값 반환한다.
+
+#is: 두 객체가 같은 객체(메모리 주소가 같은지) 인지 비교하는 연산자!
+li=["3",1,2,True,4.5]
+for i in li:
+    if type(i) is str:
+        continue
+    print(i, type(i))
+```
+### for문과 함께 자주 사용하는 range 함수
+- range(1,11)은 숫자 1부터 10까지의 숫자를 데이터로 가지는 객체이다.
+```python
+add = 0
+for i in range(1,11):
+      add = add + i
+print(add) # 55
+```
+### 리스트 컴프리헨션 사용하기
+- 리스트 안에 for문을 포함하는 리스트 컴프리헨션을 사용하면 좀 더 편리하고 직관적으로 만들 수 있다.
+```python
+# 구구단 리스트 컴프리헨션 사용하여 구현
+result = [x*y for x in range(2,10)
+      for y in range(1,10)]
+print(result)
+```
+## 함수
+```python
+#함수
+#개발자가 함수명 통해서 정의한 후에 필요할 때마다 호출
+#반복되는 코드를 한번 구현 한후 재사용 가능하도록 만든 코드의 집합
+#함수 구현 후 -> 재사용
+
+#매개변수가 있는 함수
+#매개변수가 업는 함수
+#결과값 반환하는 함수(return)
+#결과값 반환 안하는 함수
+
+def func1(): #매개변수가 없는 함수
+    print("함수1")
+#함수 호출 -> 함수실행
+func1()
+
+def func2(a,b): #매개변수가 있는 함수
+    print(a,b) #결과값 반환 안하는 함수
+
+func2(1,2)
+
+def func3(a,b): #매개변수가 있는 함수
+    return(a+b)  #결과값 반환하는 함수(return)
+
+print(func3(10,20))
+```
 
 ---
 
