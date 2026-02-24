@@ -1,6 +1,8 @@
 # IBM x RED HAT AI과정
 ## python
 
+## 02-24 수업내용
+
 ## 02-23 수업내용
 
 ## 집합 자료형 - set
@@ -59,12 +61,19 @@ print(type(b)) #<class 'bool'>
 ```
 - 0: 거짓, None : 거짓
 
+### 리스트를 복사하고자 할 때 
+```python
+a = [1,2,3]
+b = a
+print(a is b)  # True / a와 b는 완전히 동일
+```
 ### copy 모듈 이용하기 p.114
 ```python
 #from 모둘명 import 함수
 from copy import copy
 a2=[1,2,3] #복사를 했지만 요소만 복사/ 주소값은 복사하지않음
-b2 = copy((a2))
+b2 = copy((a2))  
+print(b is a)  #False b와 a가 가리키는 객체는 서로 다르다
 ```
 ---
 ## if문
@@ -282,8 +291,6 @@ result = ",".join('abcd')
 print(result)  #a,b,c,d
 
 letters = ['a', 'b', 'c', 'd'] #리스트나 튜플도 입력으로 사용 가능
-result = ",".join(letters)
-print(result)  #a,b,c,d
 ```
 
 ### 소문자를 대문자로 바꾸기 -upper, 대문자를 소문자로 바꾸기 - lower
@@ -444,6 +451,12 @@ print(pack1)   #(2, 3, 4)
 
 (x,y,z) = pack1 #unpacking
 print(x, y, z) #2 3 4
+```
+### 튜플 더하기 
+```python 
+a = (1, 2, 3)
+a = a + (4,)  #(4,) 라는 튜플을 더한다. a값이 변경되는 것 아니라 새로운 튜플이 생성되고, 그 값이 변수에 대입. a고유 주소 값 변경됨
+print(a) 
 ```
 
 ### 딕셔너리
