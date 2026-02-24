@@ -3,6 +3,257 @@
 
 ## 02-24 수업내용
 
+## 함수
+- 파이썬의 함수 구조
+```python
+def 함수_이름(매개변수):
+    수행할_문장1
+    수행할 문장2
+```
+### 매개변수(parameter)와 인수(arguments)
+- 매개변수는 함수에 입력으로 전달된 값을 받는 변수
+- 인수는 함수를 호출할 때 전달되는 입력값을 의미
+```python
+def add(a,b): #a,b는 매개변수
+    return a + b
+print(add(3,4)) #3,4는 인수
+```
+### 일반적인 함수
+- 리턴값이 있는 함수
+```python
+def func1(x):
+    y1 = x * 5
+    y2 = x * 10
+    y3 = x * 20
+    return(y1,y2,y3)
+a=func1(5) #a의 값은 return 값
+print(a, type(a))   # (25, 50, 100) <class 'tuple'>
+```
+### 매개변수 지정하여 호출하기
+```python
+def sub(a,b):
+    return a - b
+result = sub(a=7, b=3)
+print(result)
+```
+---
+## 여러 개의 입력값을 받는 함수 만들기
+- **(*args)** 을 사용하여 입력값을 여러 개를 받는다.
+```python
+def func1(*args):
+    for i in args:
+        print(i)
+func1('gildong')
+func1('gildong', 'tom', 'juli')
+func1('gildong', 'tom', 'juli','jack')
+```
+
+### 키워드 매개변수, kwargs
+- 키워드 매개변수를 사용할 때는 매개변수 앞에 별 2개를 붙인다.
+```python
+## *kwargs
+def func2(**kwargs):
+    for i in kwargs.keys():
+        print(i, kwargs[i], type(i), kwargs, type(kwargs))
+func2(name1 = '철수')
+func2(name1 = '영수', name2='영희', name3='철희')
+func2(name1 = '바보', name2='영미')
+
+def func3(arg1, arg2, *args, **kwargs):
+    print(arg1, arg2, args, kwargs)
+func3(10,40,'kim','lee''park',age=10, ader='seoul')
+```
+### 함수의 리턴값은 언제나 하나이다.
+
+---
+### 초기값 설정
+- 매개변수에 초기값을 미리 설정
+```python
+def say(name, man, old=20):
+    print(name)
+    if man:
+        print('남자', old)
+    else:
+        print("여자", old)
+say('jili', True)
+say('tom', False, 10)
+```
+### 함수 안에서 선언한 변수의 효력 범위
+```python
+a = 1   # 함수 밖의 변수 a
+def vartest(a):  # vartest 함수 선언
+    a = a + 1
+    return a
+    
+a = vartest(a)    #vartest 함수의 입력값으로 a를 대입
+print(a)    # a값 출력 (1출력됨)
+```
+- 함수 안에서 사용하는 매개변수는 함수 안에서만 사용하는 '함수만의 변수' 이다.
+- 매개변수 a는 함수 안에서만 사용하는 변수일 뿐, 함수 밖의 변수 a와는 전혀 상관없다
+
+### 함수 안에서 함수 밖의 변수를 변경
+1. return 사용하기
+2. global 명령어 사용하기
+---
+
+### lambda 예약어
+- 함수를 생성할 때 사용하는 예약어로, def와 동일한 역할을하고, 줄 간결하게 만들 때 사용
+```python
+# 함수명 = lambda 매개변수:실행문
+add = lambda a, b: a + b
+result = add(3,4)
+print(result)
+#람다 왜쓰냐
+#가독성 좋음, 코드간결,메모리 절약
+#즉시 실행 함수 -> 정의하자마자 바로 실행됨
+
+multi = lambda x, y : x * y
+print(multi(3, 4))
+
+a = multi #함수명을 a에 할당함(a는 alias - 별칭이 됨)
+print(a(4, 5))
+```
+---
+
+## 사용자의 입출력
+### input 사용하기
+```python
+name = input('이름은?')
+score = input('학점은?')
+age = input('나이는?')
+print(name,score,age)
+print(type(name), type(score), type(age))
+
+num1 = int(input('첫번째 정수')) #문자열 타입 -> 숫자(정수)타입으로 변경
+num2 = int(input('두번째 정수'))
+print(num1 + num2)
+```
+
+### print 자세히 알기
+- 큰따옴표로 둘러싸인 문자열은 +연산과 동일하다
+- 문자열 띄어쓰기는 ,쉼표로한다. (**문자열 띄어쓰기 가능**)
+---
+
+## 파일 읽고 쓰기
+### 파일 생성하기
+```python
+# 파일 입출력
+# 읽기: r, 쓰기, w(파일생성), 추가 : a
+#파일 읽기
+# 절대 경로(C:/test/news.txt), 상대경로("../, ./")
+#인코딩 : 문자를 숫자로 바꾸는 것
+#디코딩 : 숫자를 문자로 바꾸는 것
+#UTF-8 : 가장 많이 쓰는 국제 표준 인코딩(유니코드)
+#encoding = 'UTF-5'
+
+f = open("새파일.txt",'w')
+f.close() # 파일 객체를 닫아주는 역할 한다.
+```
+### 파일을 쓰기 모드로 열어 내용 쓰기
+```python
+with open('./resource/test.txt', 'w') as f: #test1.tsx 파일 생성하여 읽음
+    f.write('h1 python!!\n') #test1.tsx 파일에 문자열 쓰기
+```   
+---
+
+### readline 함수 이용하기
+```python
+with open('./resource/news.txt', 'r', encoding='UTF-8') as f:
+    line=f.readline() #한 줄씩 출력
+    print(line)
+    line = f.readline()
+    print(line)
+```
+### readlines 함수 이용하기
+```python 
+with open('./resource/news.txt', 'r', encoding='UTF-8') as f:
+    lines=f.readlines() #한 줄씩 출력
+    print(lines)
+    for i in lines:
+        print(i)
+```
+### read 함수 사용하기
+```
+result = f.read()
+print(result)
+f.close()
+```
+---
+
+### 파일객체를 for문과 사용 - 파일을 줄 단위로 읽을 수 있다.
+```python
+f = open('./resource/news.txt', 'r', encoding='UTF-8')
+for line in f:
+    print(line)
+f.close()
+```
+### 파일에 새로운 내용 추가하기
+```python
+with open('./resource/test.txt', 'a') as f: # 문자열 append
+    f.write('h1 react!!\n')  
+
+# 줄바꿈을 자동으로 추가안함 : writelines         
+with open('./resource/test.txt', 'a') as f:
+    li=['React\n','DB\n','Python\n']
+    f.writelines(li)
+```
+### with을 사용하여 파일을 열면 항상 닫아주게 한다.
+### CSV(Comma Seperated Values) - csv 파일 불러옴
+---
+
+## 클래스
+- 과자 틀 = 클래스, 과자 틀로 찍어 낸 과자 = 객체, 클래스 안에 구현된 함수 = **메서드**
+---
+### 객체와 인스턴스의 차이
+- 인스턴스 -> 클래스로 만든 객체
+```python
+class Cookie:
+    pass
+a = Cookie() # a객체는 Cookie의 인스턴스이다.
+b = Cookie()
+```
+```python
+# class 설계도
+# object 설계도를 바탕으로 실제 만들어진 제품
+
+# 클래스
+# self, 인스턴스 메소드, 인스턴스 변수
+# 클래스 메소드, 클래스 변수
+
+#객체(object) : 클래스의 인스턴스를 포함한 모든 파이썬 데이터 //123,"Hello",[1,2,3]
+#**인스턴스(instance) : 특정 클래스에 의해 생성된 객체를 지칭할 때
+from copy import copy
+class Profile:
+    names="gildong" #클래스 변수(클래스 블록 안 - 모든 인스턴스 접근가능(공유))
+
+    #초기화 함수(self:객체 자기자신)
+    def __init__(self, name, age): #인스턴스 변수 : 각 인스턴스마다 개별적으로 존재
+        self.name=name  #self를 안적으면 지역변수임 => 인스턴스에 저장되질 않음
+        self.age = age
+
+p = Profile("gilding", 13)  #Profile클래스의 인스턴스, 객체가 생성되면 __init__함수 자동 호출됨
+p2 = Profile("jiji", 23)
+```
+- 인스턴스 메서드()를 클래스 이름으로 직접 호출할 때는, 생략되던 self 자리에 인스턴스 객체()를 명시적으로 전달해야 한다.
+```python
+class Test:
+    # def func1():
+    #     print("Func1!!") #self 인자가 없는 일반 함수 --> 클래스 안에 있지만 인스턴스 메소드 아님
+
+    def func2(self):   #인스턴스 메소드로 호출 시 자동으로 self(인스턴스 객체 자신)가 전달됨
+        print(id(self)) 
+        print("Func2!!")
+t = Test()
+# t.func1() #에러 -> func1()에 self가 없는데, t.func()호출 시 파이썬 내부적으로 func1(t)호출하려 한다.
+t.func2()
+
+# Test.func1() #클래스에서 직접호출
+#Test.func2() #예외 -> func2(self)인데 인자 없이 호출해서 self(Test의 인스턴스)가 없어 예외
+Test.func2(t) # 직접 인스턴스 t를 self로 넘겨 호출
+```
+
+
+---
 ## 02-23 수업내용
 
 ## 집합 자료형 - set

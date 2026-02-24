@@ -11,8 +11,6 @@ from copy import copy
 class Profile:
     names="gildong" #클래스 변수(클래스 블록 안 - 모든 인스턴스 접근가능(공유))
 
-
-
     #초기화 함수(self:객체 자기자신)
     def __init__(self, name, age): #인스턴스 변수 : 각 인스턴스마다 개별적으로 존재
         self.name=name  #self를 안적으면 지역변수임 => 인스턴스에 저장되질 않음
