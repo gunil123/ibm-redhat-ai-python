@@ -293,6 +293,55 @@ print(list(zip([10,20,30], [40,50,60])))
 
 ## 02-25 수업내용
 
+## 생성자
+- **생성자(Constructor)**란 객체가 생성될 때 자동으로 호출되는 *메서드*를 의미한다. 파이썬 메서드명으로
+( __init __ ) 를 사용하면 이 메서드는 생성자가 된다. 
+
+```python
+class Car:
+    #p.205 
+    def __init__(self, make, model, year): #**생성자** 호출하는 인스턴스 메소드
+        self.make = make
+        self.model = model
+        self.year = year
+        self.speed = 0 #Car객체의 속성 speed를 선언하여 초기화
+    
+    def name(self):
+        names=str(self.year) + " " + self.make + " " + self.model
+        return names
+    
+    def speed1(self):
+        print(str(self.speed) + "이다")
+
+#객체명 = 클래스명(init함수의 매개변수)
+#객체생성코드 -> 자동으로 __init__호출
+c1=Car('tesla','models',2018)
+print(c1.name())  #인스턴스를 통해 호출하면 파이썬이 자동으로 인스턴스를 self에 넣어줌
+c1.speed1()
+```
+
+---
+## 클래스의 상속
+- **상속(inheritance)**이란 물려받다는 뜻으로, 클래스에도 이 개념을 적용할 수 있다.
+
+```python
+# object(클래스 상속받음)
+
+c1=Car('tesla','models',2018)
+print(c1.name())  #인스턴스를 통해 호출하면 파이썬이 자동으로 인스턴스를 self에 넣어줌
+c1.speed1()
+
+class A:
+    def add(a, b):
+        print(a+b)
+    def minus(a, b):
+        print(a-b)
+#객체생성코드
+# a1=A()
+# a1.add(3,4) #a라는 인스턴스를 받을 self가 없음 
+# # TypeError: A.add() takes 2 positional arguments but 3 were given
+```
+
 
 ---
 ## 02-24 수업내용
@@ -332,7 +381,7 @@ print(result)
 ```
 ---
 ## 여러 개의 입력값을 받는 함수 만들기
-- **(*args)** 을 사용하여 입력값을 여러 개를 받는다.
+- **(*args)** 을 사용하여 입력값을 여러 개를 받는다. ***튜플***로 받는다.
 ```python
 def func1(*args):
     for i in args:
@@ -343,7 +392,7 @@ func1('gildong', 'tom', 'juli','jack')
 ```
 
 ### 키워드 매개변수, kwargs
-- 키워드 매개변수를 사용할 때는 매개변수 앞에 별 2개를 붙인다.
+- 키워드 매개변수를 사용할 때는 매개변수 앞에 별 2개를 붙인다. ***딕셔너리***로 받는다.
 ```python
 ## *kwargs
 def func2(**kwargs):
@@ -957,7 +1006,21 @@ print(a)  # [4, 1, 2, 3]
       - count(x)는 리스트 안에 x가 몇 개 있는지 조사하여 그 개수 리턴하는 함수
 - 리스트 확장 - extend
       - a.extend([ 4,5])는 a+=[4,5 ]와 동일하다.
+```python
+a = [1, 2, 3]
+print(id(a))  #1589928553600
+a = a + [4, 5]
+print(a)   
+print(id(a)) #1589928555264
 
+a = [1, 2, 3]
+print(id(a))   #1589928651584
+a.extend([4, 5])
+print(a) 
+print(id(a))   #1589928651584
+
+# -> 리스트에 +를 사용하면 a가 저장되있는 다른 주소 값을 리턴하고, extend를 사용하면 그대로 유지되는 것을 알 수 있다.  
+```
 - 슬라이싱에서 간격줘서 일부분 자르기
 ```python
 a="abcdefg"
