@@ -74,8 +74,10 @@ find_id = 2
 result = manager.find_user(find_id)
 
 if result:
-    print
-
+    print(f"조회된 유저: {result}") # print 뒤에 내용을 채워넣었습니다.
+else:
+    print(f"ID {find_id}번 유저를 찾을 수 없습니다.")
+# 전체 목록 조회 및 삭제 테스트
 manager.li_user()
 print("=================")
 manager.delete_user(1)
