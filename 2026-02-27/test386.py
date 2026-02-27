@@ -31,17 +31,17 @@ for i in A:
         sum2 += i
 print(sum2)
 
-# Q5. 피보나치 함수
+# # Q5. 피보나치 함수
 
-n = int(input('정수를 입력하시오 : '))
+# n = int(input('정수를 입력하시오 : '))
 
-def fib(n):
-    if n == 0 : return 0
-    if n == 1 : return 1
-    return fib(n-2) + fib(n-1)
-for i in range(n):
-    print(fib(i), end = " ")
-print(' ')
+# def fib(n):
+#     if n == 0 : return 0
+#     if n == 1 : return 1
+#     return fib(n-2) + fib(n-1)
+# for i in range(n):
+#     print(fib(i), end = " ")
+# print(' ')
 
 
 # Q6. 숫자의 총합 구하기
@@ -111,29 +111,29 @@ print(cal2.sum3())
 print(cal2.avg())
 # arg로 튜플로 묶어 내장함수 처리
 
-# Q11. 모듈을 사용하는 방법
-import sys
-sys.path.append("c:\\doit")
-import mymod
-print(mymod.add(3,4))
-# doit 디렉터리를 추가하고, mymodule을 만들어 사용
+# # Q11. 모듈을 사용하는 방법
+# import sys
+# sys.path.append("c:\\doit")
+# import mymod
+# print(mymod.add(3,4))
+# # doit 디렉터리를 추가하고, mymodule을 만들어 사용
 
-#Q12. 오류와 예외처리
-result = 0
-try : 
-    [1, 2, 3,][3]
-    "a" + 1
-    4 / 0
-except TypeError:
-    result += 1
-except ZeroDivisionError:
-    result += 2
-except IndexError:
-    result += 3
-finally:
-    result += 4
-print(result)
-# 7, IndexError 발생 -> finally = 0 + 3 + 4 = 7
+# #Q12. 오류와 예외처리
+# result = 0
+# try : 
+#     [1, 2, 3,][3]
+#     "a" + 1
+#     4 / 0
+# except TypeError:
+#     result += 1
+# except ZeroDivisionError:
+#     result += 2
+# except IndexError:
+#     result += 3
+# finally:
+#     result += 4
+# print(result)
+# # 7, IndexError 발생 -> finally = 0 + 3 + 4 = 7
 
 # # Q 13. DashInsert 함수
 # data = "4546793"
