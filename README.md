@@ -286,7 +286,40 @@ print(type([]))
 print(list(zip([10,20,30], [40,50,60])))
 ```
 
+```python
+import threading
+import time
 
+def game(name):
+    print(f"{name}입장")
+    time.sleep(2)
+    time.sleep(2)
+    print(f"name퇴장")
+name = ["정국", "RM","뷔"]
+
+threads = []
+
+for i in name:
+    t = threading.Thread(target = game, args=(i,))   # 1.3개 스레드 동시시작
+    t.start() #스레드 실행 메소드  #스레드 실행 메소드 #2. 2초동안 기다린 후 3개 스레드가 동시에 종료됨
+    threads.append(t)
+for t in threads:
+    #print(t)
+    t.join()  # 모든 작업 스레드 다 끝날때까지 대기
+
+#스레드 객체생성
+#Thread: 파이썬 제공 클래스 - > threading 모듈에 정의되었다.
+t1 = threading.Thread(target=game, args=("음악",2))
+t2 = threading.Thread(target=game, args=("채팅",3))
+
+#스레드 시작메소드 -> target걸었던 함수호출
+t1.start()  #game()
+t2.start()
+print("final")
+
+t1.join() #t1이 끝날때까지 기다림
+t2.join() #t2 
+```
 
 
 ---
@@ -340,6 +373,219 @@ class A:
 # a1=A()
 # a1.add(3,4) #a라는 인스턴스를 받을 self가 없음 
 # # TypeError: A.add() takes 2 positional arguments but 3 were given
+```
+```python
+#class 자식 클래스명=서브클래스명(부모클래스명=슈퍼클래스 명)
+class Person:
+    def __init__(self):
+        print('안녕')
+
+class Student(Person):
+    def __init__(self):
+        print('학생은 공부해')
+        # 상속받았다 해서 부모 __init__을 자동으로 호출해주지 않는다.
+        # super().__init__으로 명시해야 부모클래스의 함수 호출된다. 
+        super().__init__()
+p=Person()
+s=Student()
+
+class Super:
+    def a(self):
+        print('super')
+class Sub(Super):
+    def a(self):
+        print('자식클래스') #오버라이딩
+    def b(self):
+        print('sub')
+s = Sub()
+s.a()
+s.b()
+
+s1 = Super()
+s1.a()
+# s1.b() 부모는 자식 메서드에 접근 불가
+```
+- 부모클래스에 있는 메서드를 동일한 이름으로 다시 만드는 것을 **메서드 오버라이딩**이라고 한다.
+- 클래스변수는 다른 객체들의 영향을 받지 않고 그 값을 유지한다. 클래스_이름.클래스변수로 사용할 수 있다.
+
+---
+
+## 모듈
+- ***모듈***이란 함수나 변수 또는 클래스를 모아 놓은 파이썬 파일
+```python
+#모듈 : 파이썬 코드 들어있는 파일(.py 파일 하나)
+#패키지 : 여러 모듈을 폴더로 묶은 것
+#라이브러리 : 여러 패키지, 모듈을 모아놓은 것(ex. pandas, numpy..)
+
+def add(x, y):
+    return x+y
+
+def sub(a, b):
+    return a - b
+
+def multi(x,y):
+    return x * y
+
+def div(x,y):
+    return x/y
+# print(add(4,5))
+# print(sub(4,5))
+# print(multi(4,5))
+# print(div(4,5))
+
+#파이썬 파일 실행할 때, 파이썬 인터프리터가 자동으로 그 파일에
+# __name__(이름)을 붙여준다
+# 직접 실행하는 파일은 __name__이고 __main__이 되고
+#다른 파일에서 import해서 사용하는 파일은 __name__이 "파일명"이 된다.
+# if __name__=="__main__":
+print(add(4,5))
+print(sub(4,5))
+print(multi(4,5))
+print(div(4,5))
+```
+### 모듈 불러오기
+- import 모듈_이름, from 모듈_이름 import 모듈 _함수를 이용해 불러올 수 있다.
+
+```python
+#sys 모듈: 파이썬에서 제공하는 표준 라이브러리 모듈(실행 관련제어 모듈)
+import sys
+
+print(sys) #<module 'sys' (built-in)>
+print(sys.path)  #'c:\\python1' 등록되어있음 -> python1폴더에 있는 파일들을 다 imort 할 수 있다
+
+sys.path.append('c:/unit')  #폴더 경로가 등록이 안되어 있음 append로 경로 추가해라.
+print(sys.path)
+print(type(sys.path))
+
+import moduleTest
+print(moduleTest.add(1,2))
+```
+### if__name__==" __main__ ":의 의미
+- 참이면 if문 다음 문장 수행되고, 다른파일에서 모듈을 불러 사용할 때는 거짓이 되어 수행되지 않는다.
+
+### 내장 함수(built-in)
+```python
+#내장 함수(자주 사용하는 함수 위주)
+
+print(abs(-3))  #3
+
+#all,any : iterable 요소 검사(참, 거짓)
+print(all([1,2,3])) #and  True
+print(all([1,2,0]))   #False
+
+print(any([1,2,0])) #or(하나라도 참인 요소 있으면 true)
+
+a = [60, 1, 3, 10 , 50]
+if all(i > 20 for i in a):  # 리스트 안에 있는 값이 다 20보다 커야 true
+    print("ok")
+else:
+    print("cancle")
+
+a = [60, 1, 4, 10 , 50]
+if any(i>30 for i in a):
+    print("ok")
+else:
+    print("cancle") 
+
+#chr : 아스키 -> 문자, ord: 문자 -> 아스키
+#any - 반복 가능한 데이터 x를 입력받아 x요소 중 하나라도 참이면 True, 모두가 거짓일 때만 False(all의 반대)
+# dir - 객체가 지닌 변수나 함수를 보여주는 함수
+# divmid - 2개의 숫자를 입력받아 a를 b로 나눈 몫과 나머지를 튜플로 리턴한다.
+# emumerate - 인덱스 값과 함께 (리스트, 튜플, 문자열)을 입력받아 리턴
+# eval - 해당문자열을 실행한 결과값 리턴한다
+# filter - ( 특정 값만 걸러서 반환)
+# hex - 16진수 반환
+# id - 객체를 입력받아 고유값을 리턴
+# input - 사용자의 입력받음
+# int - 문자열 형태의 숫자나 소수점이 있는 정수로 리턴
+# isinstance(object, class) - 클래스의 인스턴스인지 판단하여 참이면 True, 거짓이면 False
+# len - 입력값 길이 리턴
+# list - 리스트 변환하여 리턴
+# map(f, iterable) - 함수와 반복가능한 데이터를 입력받아 결과를 리턴
+# max - 최대값, min - 최소값
+# oct - 8진수
+# open - 파일 이름과 읽기 방법을 입력받아 파일 객체를 리턴한다. w-쓰기, r읽기, a추가모드, b바이너리 모드   
+# ord - 유니코드 숫자 값, pow(x,y) - 제곱값
+# range - 시작 숫자 지정해 주지 않으면 함수는 0부터 시작, range(5,10): 5~9, 세 번째 인수는 숫자 거리
+# round - 반올림
+# sorted - 리스트로 정렬하여 리턴 , str - 문자열 형태로 전환하여 리턴
+# tuple - 튜플로 바꾸어 리턴, zip : 동일한 개수로 이루어진 데이터를 묶어서 리턴
+```
+---
+```python
+#예외처리
+#SyntaxError, NameError, IndexError, ZeroDivisionError, KeyError, ValueError, TypeError....
+
+# print('h) 
+# print('h')) #SyntaxError
+
+# x=3
+# y=4
+# print(z) #NameError
+
+# a=[1,2,3]
+# print(a[5])  #IndexError
+
+# print(4/0)   #ZeroDivisionError
+
+# a={'a':'gg','b':33}
+# print(a['b'])
+# print(a['c'])  #KeyError
+
+# x=[1,2,3]
+# x.remove(2)
+# x.remove(5) #ValueError
+
+x = [1,2]
+y = 'python'
+#print(x + y) #TypeError
+print(x + list(y))
+
+li = ['db', 'python', 'react']
+try: #예외가 날 수도 있는 코드 출력
+    x = 'java'
+    y = li.index(x) #예외발생 하자마자 except 절로 넘어감
+    print('try 블럭 수행')
+except ValueError: #예외 발생할 때 실행되는 블럭
+    print('except 블럭 수행')
+
+else: #예외 없을 때 실행되는 블럭
+    print('except 블럭 수행')
+
+##################################
+
+
+li = ['db', 'python', 'react']
+try: #예외가 날 수도 있는 코드 출력
+    x = 'java'
+    y = li.index(x) #예외발생 하자마자 except 절로 넘어감
+    print('try 블럭 수행')
+
+except Exception as e: #예외 발생할 때 실행되는 블럭
+    print(e)
+else: #예외 없을 때 실행되는 블럭
+    print('else')
+finally: #무조건 실행되는 블럭(예외발생여부 상관없음)
+    print("finally")
+
+print("-----------------------------------")
+
+#Exception 클래스 상속받음
+class MyError(Exception):
+    def MyError(Exception):
+        super().__init__('허용되지 않는 별명입니다')
+def say_nick(nick):
+    if nick == '바보':
+        raise MyError()  #예외를 일부러 발생시킴
+    print(nick)
+
+try:
+    say_nick('천사')
+    say_nick('바보')
+
+except MyError as e:
+    print(e)
+
 ```
 
 
