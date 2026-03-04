@@ -110,8 +110,6 @@ def deleteItem(db):
     time.sleep(0.5)
 
 
-
-
 #로그인 진행
 def login(id, pw):
     while True:
@@ -168,7 +166,7 @@ def newUser():
             time.sleep(0.5)
 
 
-#메인창
+''' 첫 화면 '''
 def main(basicId, basicPw):
     global lastId
     while True:
@@ -241,7 +239,7 @@ def viewByDate(db, target):
 
         tasks = db[target]
         for idx, task in enumerate(tasks, 1):
-            print(f"{idx}. {task}")
+            print(f"[{idx}] {task}")
         time.sleep(1)
     else:
         print("\n[Notice] 해당 날짜에 등록된 할 일이 없습니다.")
@@ -328,8 +326,9 @@ def todoUpdate():
     db = loadDB()
     while True:
         print(list(loadDB().keys()))  #날짜 출력 깔끔하게 하고 싶다
-        print("\n어느 날짜의 할 일을 선택하시겠습니까?")
+        print("어느 날짜의 할 일을 선택하시겠습니까?")
         date = input(": ")
+        print("\n")
         try:
             oldList = db[date]
             break
@@ -347,7 +346,7 @@ def todoUpdate():
             time.sleep(0.5)
             continue
 
-        if idx < 0:
+        if idx < 0 or idx >= len(oldList):
             print("[Error] 0 이상의 숫자를 입력하세요.")
             time.sleep(0.5)
             continue
@@ -377,7 +376,7 @@ def todoUpdate():
                 time.sleep(0.5)
                 continue
         todoMain(lastId)
-        break
+        return
 
 
 """ ----- 할 일 삭제 ----- """
