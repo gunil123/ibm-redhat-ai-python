@@ -32,8 +32,7 @@ def loadDB():
     try:
         with open(TODO_DB_PATH, "rb") as f:
             loaded_db = pickle.load(f)    # loaded_db 변수에 담기
-            print("\n[Success] 파일 불러오기가 완료되었습니다. (불러오기)") # 2. 성공 메시지 출력
-            return loaded_db   # 3. 담아둔 데이터를 최종 반환
+            return loaded_db   # 담아둔 데이터를 최종 반환
     except (EOFError, FileNotFoundError):
         return {}
 
@@ -241,8 +240,8 @@ def viewByDate(db, target):
         print(f"\n--- {target} 할 일 목록 ---")
 
         tasks = db[target]
-        for task in tasks:
-            print("-", task)
+        for idx, task in enumerate(tasks, 1):
+            print(f"{idx}. {task}")
         time.sleep(1)
     else:
         print("\n[Notice] 해당 날짜에 등록된 할 일이 없습니다.")
@@ -328,7 +327,7 @@ def todoUpdate():
     global lastId
     db = loadDB()
     while True:
-        print(list(loadDB().keys())) #날짜 출력 깔끔하게 하고 싶다
+        print(list(loadDB().keys()))  #날짜 출력 깔끔하게 하고 싶다
         print("\n어느 날짜의 할 일을 선택하시겠습니까?")
         date = input(": ")
         try:
@@ -417,10 +416,12 @@ def manageMenu():
     # 선택에 따른 기능 실행
     if sub == "1":
         saveDB(db)
+
     elif sub == "2":
         loaded_db = loadDB() 
         if loaded_db:
             viewAll(loaded_db)  # <----불러온 내용 즉시 확인
+            print("\n[Success] 파일 불러오기가 완료되었습니다. (불러오기)")
     else:
         print("[Notice] 잘못된 입력입니다.")
 
